@@ -1,0 +1,102 @@
+
+{% extends "base.html" %}
+{% block title %}{{ heading }} | JobTracker{% endblock %}
+
+{% block content %}
+<div class="panel form-panel">
+    <h1>{{ heading }}</h1>
+
+    <form method="POST">
+        <div class="form-grid">
+            <div>
+                <label for="company">Company *</label>
+                <input id="company" name="company" required
+                       maxlength="150"
+                       value="{{ record.get('company', '') }}">
+            </div>
+
+            <div>
+                <label for="job_title">Job Title *</label>
+                <input id="job_title" name="job_title" required
+                       maxlength="150"
+                       value="{{ record.get('job_title', '') }}">
+            </div>
+
+            <div>
+                <label for="location">Location</label>
+                <input id="location" name="location"
+                       value="{{ record.get('location', '') }}">
+            </div>
+
+            <div>
+                <label for="job_type">Job Type</label>
+                <select id="job_type" name="job_type">
+                    {% for item in job_types %}
+                    <option value="{{ item }}"
+                        {% if record.get('job_type', 'Full-time') == item %}
+                        selected{% endif %}>
+                        {{ item }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <label for="applied_date">Application Date *</label>
+                <input id="applied_date" type="date"
+                       name="applied_date" required
+                       value="{{ record.get('applied_date', '') }}">
+            </div>
+
+            <div>
+                <label for="status">Status</label>
+                <select id="status" name="status">
+                    {% for item in statuses %}
+                    <option value="{{ item }}"
+                        {% if record.get('status', 'Applied') == item %}
+                        selected{% endif %}>
+                        {{ item }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <label for="interview_date">Interview Date</label>
+                <input id="interview_date" type="date"
+                       name="interview_date"
+                       value="{{ record.get('interview_date') or '' }}">
+            </div>
+
+            <div>
+                <label for="salary_range">Salary Range</label>
+                <input id="salary_range" name="salary_range"
+                       value="{{ record.get('salary_range', '') }}">
+            </div>
+
+            <div>
+                <label for="recruiter_name">Recruiter Name</label>
+                <input id="recruiter_name" name="recruiter_name"
+                       value="{{ record.get('recruiter_name', '') }}">
+            </div>
+
+            <div>
+                <label for="job_url">Job Posting URL</label>
+                <input id="job_url" type="url" name="job_url"
+                       value="{{ record.get('job_url', '') }}">
+            </div>
+
+            <div class="full-width">
+                <label for="notes">Notes</label>
+                <textarea id="notes" name="notes" rows="4">{{ record.get('notes', '') }}</textarea>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button class="btn primary" type="submit">Save Application</button>
+            <a class="btn secondary"
+               href="{{ url_for('application_list') }}">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

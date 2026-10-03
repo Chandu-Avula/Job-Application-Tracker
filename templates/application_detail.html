@@ -1,0 +1,49 @@
+{% extends "base.html" %} {% block title %}Application Details | JobTracker{%
+endblock %} {% block content %}
+<div class="panel">
+  <div class="page-heading">
+    <div>
+      <h1>{{ record.job_title }}</h1>
+      <p>
+        {{ record.company }} · {{ record.location or 'Location not specified' }}
+      </p>
+    </div>
+    <a
+      class="btn primary"
+      href="{{ url_for(
+            'edit_application', application_id=record._id
+        ) }}"
+      >Edit</a
+    >
+  </div>
+
+  <dl class="details-grid">
+    <dt>Status</dt>
+    <dd>{{ record.status }}</dd>
+    <dt>Job Type</dt>
+    <dd>{{ record.job_type }}</dd>
+    <dt>Applied Date</dt>
+    <dd>{{ record.applied_date }}</dd>
+    <dt>Interview Date</dt>
+    <dd>{{ record.interview_date or '-' }}</dd>
+    <dt>Salary Range</dt>
+    <dd>{{ record.salary_range or '-' }}</dd>
+    <dt>Recruiter</dt>
+    <dd>{{ record.recruiter_name or '-' }}</dd>
+    <dt>Job URL</dt>
+    <dd>
+      {% if record.job_url %}
+      <a href="{{ record.job_url }}" target="_blank" rel="noopener noreferrer"
+        >Open job posting</a
+      >
+      {% else %}-{% endif %}
+    </dd>
+    <dt>Notes</dt>
+    <dd>{{ record.notes or 'No notes added.' }}</dd>
+  </dl>
+
+  <a class="btn secondary" href="{{ url_for('application_list') }}"
+    >Back to applications</a
+  >
+</div>
+{% endblock %}

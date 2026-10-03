@@ -1,0 +1,68 @@
+{% extends "base.html" %} {% block title %}Dashboard | JobTracker{% endblock %}
+{% block content %}
+<div class="page-heading">
+  <div>
+    <h1>Welcome, {{ session.get('user_name', 'User') }}!</h1>
+    <p>Here's an overview of your job search.</p>
+  </div>
+  <a class="btn primary" href="{{ url_for('add_application') }}">
+    + Add Application
+  </a>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card">
+    <span>Total Applications</span>
+    <strong>{{ total }}</strong>
+  </div>
+
+  {% for status, count in counts.items() %}
+  <div class="stat-card">
+    <span>{{ status }}</span>
+    <strong>{{ count }}</strong>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="panel">
+  <div class="page-heading">
+    <h2>Recent Applications</h2>
+    <a href="{{ url_for('application_list') }}">View all</a>
+  </div>
+
+  {% if recent %}
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Job Title</th>
+          <th>Date Applied</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for job in recent %}
+        <tr>
+          <td>{{ job.company }}</td>
+          <td>
+            <a
+              href="{{ url_for(
+                            'application_details',
+                            application_id=job._id
+                        ) }}"
+              >{{ job.job_title }}</a
+            >
+          </td>
+          <td>{{ job.applied_date }}</td>
+          <td><span class="status">{{ job.status }}</span></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p>No applications yet. Add your first job application.</p>
+  {% endif %}
+</div>
+{% endblock %}

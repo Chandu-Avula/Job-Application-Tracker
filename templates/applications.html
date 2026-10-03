@@ -1,0 +1,47 @@
+{% extends "base.html" %} {% block title %}My Applications | JobTracker{%
+endblock %} {% block content %}
+<div class="panel">
+  <div class="page-heading">
+    <h1>My Applications</h1>
+    <a class="btn primary" href="{{ url_for('add_application') }}">
+      + Add Application
+    </a>
+  </div>
+
+  {% if records %}
+  <table>
+    <thead>
+      <tr>
+        <th>Company</th>
+        <th>Job Title</th>
+        <th>Status</th>
+        <th>Applied Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for record in records %}
+      <tr>
+        <td>{{ record.company }}</td>
+        <td>{{ record.job_title }}</td>
+        <td>{{ record.status }}</td>
+        <td>{{ record.applied_date }}</td>
+        <td>
+          <a
+            href="{{ url_for(
+                        'application_details',
+                        application_id=record._id
+                    ) }}"
+            >View Details</a
+          >
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>No applications found yet.</p>
+  {% endif %}
+</div>
+{% endblock %} ```

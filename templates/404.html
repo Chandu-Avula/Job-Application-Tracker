@@ -1,0 +1,8 @@
+{% extends "base.html" %} {% block title %}Not Found | JobTracker{% endblock %}
+{% block content %}
+<div class="auth-card">
+  <h1>404 — Not Found</h1>
+  <p>The requested page or application could not be found.</p>
+  <a class="btn primary" href="{{ url_for('home') }}">Go Home</a>
+</div>
+{% endblock %}
